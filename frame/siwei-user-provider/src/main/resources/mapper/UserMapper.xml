@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.siwei.frame.user.provider.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.siwei.frame.common.utils.entity.User">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="county" jdbcType="VARCHAR" property="county" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="astack_admin_system" jdbcType="BIT" property="astackAdminSystem" />
+    <result column="astack_agent_system" jdbcType="BIT" property="astackAgentSystem" />
+    <result column="astack_webapp_system" jdbcType="BIT" property="astackWebappSystem" />
+    <result column="astack_statistical_system" jdbcType="BIT" property="astackStatisticalSystem" />
+    <result column="life_insurance_system" jdbcType="BIT" property="lifeInsuranceSystem" />
+    <result column="dafeng_statistical_system" jdbcType="BIT" property="dafengStatisticalSystem" />
+    <result column="astack_agent_small_program_system" jdbcType="BIT" property="astackAgentSmallProgramSystem" />
+    <result column="astack_toc_small_program_system" jdbcType="BIT" property="astackTocSmallProgramSystem" />
+    <result column="spare_system_code1" jdbcType="BIT" property="spareSystemCode1" />
+    <result column="spare_system_code2" jdbcType="BIT" property="spareSystemCode2" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="last_modified_time" jdbcType="TIMESTAMP" property="lastModifiedTime" />
+  </resultMap>
+  
+   <select id="findUsers" parameterType="com.siwei.frame.common.utils.entity.User" resultMap="BaseResultMap">
+  	select id, nick_name, real_name, mobile, sex, head_img, province, city, county, address, astack_admin_system, astack_agent_system,
+  	astack_webapp_system, astack_statistical_system, life_insurance_system, dafeng_statistical_system, 
+  	spare_system_code1, spare_system_code2,
+  	enabled, deleted
+  	from user where deleted = false
+  	<if test="nickName != null and nickName != ''">
+  		and nick_name like concat(#{nickName}, '%')
+  	</if>
+  	<if test="mobile != null and mobile != ''">
+  		and mobile like concat(#{mobile}, '%')
+  	</if>
+  	<if test="astackAdminSystem != null">
+  		and astack_admin_system = #{astackAdminSystem}
+  	</if>
+  	<if test="astackAgentSystem != null">
+  		and astack_agent_system = #{astackAgentSystem}
+  	</if>
+  	<if test="astackWebappSystem != null">
+  		and astack_webapp_system = #{astackWebappSystem}
+  	</if>
+  	<if test="astackStatisticalSystem != null">
+  		and astack_statistical_system = #{astackStatisticalSystem}
+  	</if>
+  	<if test="lifeInsuranceSystem != null">
+  		and life_insurance_system = #{lifeInsuranceSystem}
+  	</if>
+  	<if test="dafengStatisticalSystem != null">
+  		and dafeng_statistical_system = #{dafengStatisticalSystem}
+  	</if>
+  	<if test="astackAgentSmallProgramSystem != null">
+  		and astack_agent_small_program_system = #{astackAgentSmallProgramSystem}
+  	</if>
+  	<if test="astackTocSmallProgramSystem != null">
+  		and astack_toc_small_program_system = #{astackTocSmallProgramSystem}
+  	</if>
+  	<if test="enabled != null">
+  		and enabled = #{enabled}
+  	</if>
+  </select>
+  
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select id, nick_name, real_name, mobile, sex, head_img, province, city, county, address, astack_admin_system, astack_agent_system,
+  	astack_webapp_system, astack_statistical_system, life_insurance_system, dafeng_statistical_system, 
+  	astack_agent_small_program_system, astack_toc_small_program_system, spare_system_code1, spare_system_code2,
+  	enabled, deleted
+  	from user 
+  	where id = #{id}
+  </select>
+  
+  <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select id, nick_name, real_name, mobile, sex, head_img, province, city, county, address, astack_admin_system, astack_agent_system,
+  	astack_webapp_system, astack_statistical_system, life_insurance_system, dafeng_statistical_system, 
+  	astack_agent_small_program_system, astack_toc_small_program_system, spare_system_code1, spare_system_code2,
+  	enabled, deleted
+  	from user 
+  	where mobile = #{mobile}
+  </select>
+  
+  <update id="updateById" parameterType="com.siwei.frame.common.utils.entity.User">
+    update user
+    set nick_name = #{nickName},
+      real_name = #{realName},
+      mobile = #{mobile},
+      sex = #{sex},
+      <!-- head_img = #{headImg}, -->
+      province = #{province},
+      city = #{city},
+      county = #{county},
+      address = #{address},
+      last_modified_time = now()
+    where id = #{id}
+  </update>
+  
+  <insert id="insert" parameterType="com.siwei.frame.common.utils.entity.User" useGeneratedKeys="true" keyProperty="id">
+  	insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="headImg != null">
+        head_img,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="county != null">
+        county,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="astackAdminSystem">
+        astack_admin_system,
+      </if>
+      <if test="astackAgentSystem">
+        astack_agent_system,
+      </if>
+      <if test="astackWebappSystem">
+        astack_webapp_system,
+      </if>
+      <if test="astackStatisticalSystem">
+        astack_statistical_system,
+      </if>
+      <if test="lifeInsuranceSystem">
+        life_insurance_system,
+      </if>
+      <if test="dafengStatisticalSystem">
+        dafeng_statistical_system,
+      </if>
+      <if test="astackAgentSmallProgramSystem">
+        astack_agent_small_program_system,
+      </if>
+      <if test="astackTocSmallProgramSystem">
+        astac_toc_small_program_system,
+      </if>
+      <if test="spareSystemCode1">
+        spare_system_code1,
+      </if>
+      <if test="spareSystemCode2">
+        spare_system_code2,
+      </if>
+      created_time,
+      last_modified_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nickName != null">
+        #{nickName},
+      </if>
+      <if test="realName != null">
+        #{realName},
+      </if>
+      <if test="mobile != null">
+        #{mobile},
+      </if>
+      <if test="sex != null">
+        #{sex},
+      </if>
+      <if test="headImg != null">
+        #{headImg},
+      </if>
+      <if test="province != null">
+        #{province},
+      </if>
+      <if test="city != null">
+        #{city},
+      </if>
+      <if test="county != null">
+        #{county},
+      </if>
+      <if test="address != null">
+        #{address},
+      </if>
+      <if test="astackAdminSystem">
+        #{astackAdminSystem},
+      </if>
+      <if test="astackAgentSystem">
+        #{astackAgentSystem},
+      </if>
+      <if test="astackWebappSystem">
+        #{astackWebappSystem},
+      </if>
+      <if test="astackStatisticalSystem">
+        #{astackStatisticalSystem},
+      </if>
+      <if test="lifeInsuranceSystem">
+        #{lifeInsuranceSystem},
+      </if>
+      <if test="dafengStatisticalSystem">
+        #{dafengStatisticalSystem},
+      </if>
+      <if test="astackAgentSmallProgramSystem">
+        #{astackAgentSmallProgramSystem},
+      </if>
+      <if test="astackTocSmallProgramSystem">
+        #{astackTocSmallProgramSystem},
+      </if>
+      <if test="spareSystemCode1">
+        #{spareSystemCode1},
+      </if>
+      <if test="spareSystemCode2">
+        #{spareSystemCode2},
+      </if>
+      now(),
+      now()
+    </trim>
+  </insert>
+</mapper>

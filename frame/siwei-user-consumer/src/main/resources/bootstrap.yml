@@ -1,0 +1,19 @@
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+spring:
+  application:
+    name: siwei-user-consumer
+  cloud:
+    config:
+      label: master
+      profile: dev      #dev开发环境，test测试环境，pro正式环境
+      discovery:
+        enabled: true                     #是否从配置中心读取文件。
+        service-id: siwei-config-server   # 配置中心的servieId，即config server 服务名。
+feign:
+  hystrix:
+    enabled: true

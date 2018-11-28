@@ -1,0 +1,29 @@
+server:
+  port: 9081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+spring:
+  application:
+    name: siwei-user-provider
+  cloud:
+    config:
+      label: master
+      profile: dev      #dev开发环境，test测试环境，pro正式环境
+      discovery:
+        enabled: true                     #是否从配置中心读取文件。
+        service-id: siwei-config-server   # 配置中心的servieId，即config server 服务名。
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+# springcloud config server
+management:
+  endpoints:
+    web:
+      exposure:
+        # 加载所有的端点/默认只加载了 info / health  还有/bus_refresh 如：http://localhost:8080/actuator/info  暴露刷新：http://localhost:8888/actuator/bus-refresh
+        include: "*"
+
