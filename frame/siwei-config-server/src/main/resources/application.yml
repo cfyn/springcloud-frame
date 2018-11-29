@@ -17,8 +17,8 @@ spring:
 #          uri: http://47.99.73.235:3000/siwei/siwei-config.git
 ##          search-paths: '{profile}' # git仓库地址下的相对地址，可以配置多个，用,分割。
 #          search-paths: siwei-config # git仓库地址下的相对地址，可以配置多个，用,分割。
-#          username: linxiunan
-#          password: lxn666724
+#          username: ******
+#          password: ******
 #      label: master
 
 #设置为本地启动的方式，而不是通过git
